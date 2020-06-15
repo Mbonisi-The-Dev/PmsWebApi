@@ -60,7 +60,8 @@ namespace PmsWebApi
                                           "https://pmswebapi-dev.azurewebsites.net/api/tenantleasetermination",
                                           "https://pmswebapi-dev.azurewebsites.net/api/maintenance",
                                           "https://pmswebapi-dev.azurewebsites.net/api/notifications",
-                                          "https://pmswebapi-dev.azurewebsites.net/api/rent").AllowAnyHeader().AllowAnyMethod();
+                                          "https://pmswebapi-dev.azurewebsites.net/api/rent",
+                                          "https://pmswebapi-dev.azurewebsites.net/api/users").AllowAnyHeader().AllowAnyMethod();
 
                 });
             });
