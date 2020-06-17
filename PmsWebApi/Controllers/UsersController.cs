@@ -47,7 +47,7 @@ namespace PmsWebApi.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{UserId}")]
-        public async Task<IActionResult> PutUsers(string UserId, Users users)
+        public async Task<IActionResult> PutUsers(int UserId, Users users)
         {
             if (UserId != users.UserId)
             {
@@ -117,7 +117,7 @@ namespace PmsWebApi.Controllers
             return users;
         }
 
-        private bool UsersExists(string UserId)
+        private bool UsersExists(int UserId)
         {
             return _context.Users.Any(e => e.UserId == UserId);
         }
