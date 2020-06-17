@@ -13,6 +13,11 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using PmsWebApi.Models;
+using Swashbuckle.AspNetCore;
+using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Swashbuckle.AspNetCore.SwaggerUI;
+using Microsoft.OpenApi.Models;
 
 namespace PmsWebApi
 {
@@ -32,7 +37,38 @@ namespace PmsWebApi
         {
             services.AddControllers();
 
-            services.AddDbContext<UsersContext>(options =>
+            var contact = new OpenApiContact()
+            {
+                Name = "Mbonisi Tshuma",
+                Email = "mbonisitshuma287@gmail.com",
+                Url = new Uri("http://www.example.com")
+            };
+
+            var license = new OpenApiLicense()
+            {
+                Name = "My License",
+                Url = new Uri("http://www.example.com")
+            };
+
+            var info = new OpenApiInfo()
+            {
+                Version = "v1",
+                Title = "Property Management System API",
+                Description = "Using Swagger API Management Tool to display the structrue of the API",
+                //TermsOfService = new Uri("http://www.example.com"),
+                //Contact = contact,
+                //License = license
+            };
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", info);
+                //c.SwaggerDoc("v2", info2);
+            });
+
+
+
+        services.AddDbContext<UsersContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultPMSConnection")));
             services.AddDbContext<TenantContext>(options =>
               options.UseSqlServer(Configuration.GetConnectionString("DefaultPMSConnection")));
@@ -82,6 +118,13 @@ namespace PmsWebApi
             app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthorization();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json",
+                "Property Management System API");
+            });
 
             app.UseEndpoints(endpoints =>
             {
